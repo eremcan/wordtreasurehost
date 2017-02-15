@@ -18,11 +18,6 @@ import java.util.stream.Stream;
  */
 public interface IBildigimKelimeRepository extends Repository<BilinenKelime, Long> {
 
-    @Query(value = "SELECT k.id,k.kelimeKey,k.kelimeValue\n" +
-            "FROM Kelime as k  where k.id not in \n" +
-            "(SELECT bl.kelime.id\n" +
-            "FROM BilinenKelime as bl where bl.user.id = ?1) \n" +
-            "\n", nativeQuery = true)
     List<Kelime> findByuser(long id);
 
 }
