@@ -15,5 +15,4 @@ import java.util.List;
 public class KelimeRepository extends CommonDao<Kelime,Long> implements IKelimeRepository {
 
 
-//    List<Book> findByCategories(@Param("categories") Collection<Category> categories);
 }

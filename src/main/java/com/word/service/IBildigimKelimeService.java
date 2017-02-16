@@ -11,4 +11,8 @@ import java.util.List;
 public interface IBildigimKelimeService {
 
     List<Kelime> findBildigimKelime(Long id);
+
+    List <BilinenKelime> findBilinenAllKelime();
+
+    void addkelime(BilinenKelime bilinenKelime);
 }

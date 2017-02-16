@@ -1,5 +1,7 @@
 package com.word.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -16,11 +18,9 @@ public class User extends BaseEntity {
 
 
 
-
     @NotNull
     @Column(name = "username")
     private String userName;
-
     @NotNull
     @Column(name = "surname")
     private String surname;

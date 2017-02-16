@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 /**
  * Created by Nahide on 10.02.2017.
  */
-public interface IBildigimKelimeRepository extends Repository<BilinenKelime, Long> {
+public interface IBildigimKelimeRepository extends ICommonDao<BilinenKelime, Long> {
 
     List<Kelime> findByuser(long id);
 

@@ -18,12 +18,12 @@ public class BildigimKelimeRepository extends CommonDao<BilinenKelime, Long> imp
 
     @Override
     public List<Kelime> findByuser(long id) {
-    List<Kelime> bilmedigimKelimeList = entityManager.createQuery("SELECT k.id,k.kelimeKey,k.kelimeValue\n" +
-            "FROM Kelime as k  where k.id not in \n" +
-            "(SELECT bl.kelime.id\n" +
-            "FROM BilinenKelime as bl where bl.user.id = "+id+") \n" +
-            "\n").getResultList();
+        List<Kelime> bilmedigimKelimeList = entityManager.createQuery("SELECT k.id,k.kelimeKey,k.kelimeValue\n" +
+                "FROM Kelime as k  where k.id not in \n" +
+                "(SELECT bl.kelime.id\n" +
+                "FROM BilinenKelime as bl where bl.user.id = " + id + ") \n" +
+                "\n").getResultList();
 
-        return  bilmedigimKelimeList;
+        return bilmedigimKelimeList;
     }
 }
