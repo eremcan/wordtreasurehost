@@ -23,6 +23,11 @@ public class BildigimKelimeController {
         return new ResponseEntity<Object>(
                 iBildigimKelimeService.findBildigimKelime(id), HttpStatus.OK);
     }
+    @RequestMapping(value = "/bilinenkelimerandom/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getBildigimKelimSorguByIdAndGetRandomly(@PathVariable Long id){
+        return new ResponseEntity<Object>(
+                iBildigimKelimeService.findBildigimKelimeRandom(id), HttpStatus.OK);
+    }
     @RequestMapping(method = RequestMethod.POST, value = "/bilinenkelimeekle",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addBilinenKelime(@RequestBody BilinenKelime bilinenKelime) {
         BilinenKelime mybiBilinenKelime1 = new BilinenKelime();

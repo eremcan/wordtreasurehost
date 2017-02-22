@@ -27,5 +27,10 @@ public class KelimeController {
         else
             return new ResponseEntity<Object>("kelimeBulunamadi",HttpStatus.BAD_REQUEST);
     }
+    @RequestMapping(value = "/getallkelimelerim",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllKelime(){
+        return new ResponseEntity<Object>(
+                kelimeService.findAllKelime(), HttpStatus.OK);
+    }
 
 }

@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Nahide on 10.02.2017.
@@ -31,6 +33,15 @@ public class BildigimKelimeService implements IBildigimKelimeService {
     public void addkelime(BilinenKelime bilinenKelime) {
         bildigimKelimeRepository.persist(bilinenKelime);
     }
+
+    @Override
+    public List<Kelime> findBildigimKelimeRandom(Long id) {
+        List<Kelime> kelime = bildigimKelimeRepository.findByuserAndGetRandomly(id);
+            return kelime;
+        }
+
+
+
 
     @Override
     public List<Kelime> findBildigimKelime(Long id) {

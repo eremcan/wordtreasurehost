@@ -38,4 +38,9 @@ public class UserController {
             return new ResponseEntity<>("Kullanıcı Bulunamadı", HttpStatus.BAD_REQUEST);
         }
     }
+    @RequestMapping(value = "/getalluser",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllUser(){
+        return new ResponseEntity<Object>(
+                userService.findAllUser(), HttpStatus.OK);
+    }
 }

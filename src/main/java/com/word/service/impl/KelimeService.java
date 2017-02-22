@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.List;
 
 /**
  * Created by Nahide on 10.02.2017.
@@ -19,6 +20,10 @@ public class KelimeService implements IKelimeService {
     KelimeRepository kelimeRepository;
 
 
+    @Override
+    public List<Kelime> findAllKelime() {
+        return kelimeRepository.findAll();
+    }
 
     @Override
     public Kelime findKelime(Long id) {

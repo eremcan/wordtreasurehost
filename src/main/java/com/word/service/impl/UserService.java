@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by Nahide on 09.02.2017.
  */
@@ -20,6 +22,12 @@ public class UserService implements IUserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Override
+    public List<User> findAllUser() {
+      List<User> findAllUser = userRepository.findAll();
+      return findAllUser;
+    }
 
     @Override
     public void saveUser(User user) {

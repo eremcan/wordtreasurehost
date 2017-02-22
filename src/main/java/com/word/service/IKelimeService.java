@@ -12,4 +12,8 @@ public interface IKelimeService {
 
     Kelime findKelime(Long id);
 
+    List<Kelime> findAllKelime();
+
+
+
 }

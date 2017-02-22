@@ -48,13 +48,6 @@ public class Kelime extends BaseEntity {
         this.kelimeValue = kelimeValue;
     }
 
-    public Set<BilinenKelime> getBilinenKelimeList() {
-        return bilinenKelimeList;
-    }
-
-    public void setBilinenKelimeList(Set<BilinenKelime> bilinenKelimeList) {
-        this.bilinenKelimeList = bilinenKelimeList;
-    }
 
     /* @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "join_bilinenkelimeler ", joinColumns = {@JoinColumn(name = "id")}, inverseJoinColumns = {@JoinColumn(name = "id")})

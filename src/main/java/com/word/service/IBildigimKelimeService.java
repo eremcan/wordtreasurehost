@@ -11,6 +11,8 @@ import java.util.List;
 public interface IBildigimKelimeService {
 
     List<Kelime> findBildigimKelime(Long id);
+//randomly
+    List<Kelime> findBildigimKelimeRandom(Long id);
 
     List <BilinenKelime> findBilinenAllKelime();
 
