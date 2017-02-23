@@ -16,5 +16,8 @@ public interface IBildigimKelimeService {
 
     List <BilinenKelime> findBilinenAllKelime();
 
-    void addkelime(BilinenKelime bilinenKelime);
-}
+    void addKelime(BilinenKelime kelime);
+
+
+    }
+

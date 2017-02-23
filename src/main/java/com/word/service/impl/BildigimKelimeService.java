@@ -30,7 +30,7 @@ public class BildigimKelimeService implements IBildigimKelimeService {
     }
 
     @Override
-    public void addkelime(BilinenKelime bilinenKelime) {
+    public void addKelime(BilinenKelime bilinenKelime) {
         bildigimKelimeRepository.persist(bilinenKelime);
     }
 

@@ -6,8 +6,6 @@ import com.word.service.IKelimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.List;
 
 /**

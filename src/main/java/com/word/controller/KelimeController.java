@@ -19,18 +19,21 @@ public class KelimeController {
 
     @Autowired
     IKelimeService kelimeService;
-    @RequestMapping(value = "/kelime/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getKelimeById(@PathVariable Long id){
+
+    @RequestMapping(value = "/kelime/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getKelimeById(@PathVariable Long id) {
         Kelime mKelime = kelimeService.findKelime(id);
-        if(mKelime!=null)
-        return new ResponseEntity<Object>(mKelime, HttpStatus.OK);
+        if (mKelime != null)
+            return new ResponseEntity<Object>(mKelime, HttpStatus.OK);
         else
-            return new ResponseEntity<Object>("kelimeBulunamadi",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Object>("kelimeBulunamadi", HttpStatus.BAD_REQUEST);
     }
-    @RequestMapping(value = "/getallkelimelerim",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllKelime(){
+
+    @RequestMapping(value = "/getallkelimelerim", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllKelime() {
         return new ResponseEntity<Object>(
                 kelimeService.findAllKelime(), HttpStatus.OK);
     }
+    //public ResponseEntity<Kelime> getTwoFalseOptionKelime(Long id)
 
 }

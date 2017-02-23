@@ -17,14 +17,33 @@ public class BildigimKelimeRepository extends CommonDao<BilinenKelime, Long> imp
 
     @Override
     public List<Kelime> findByuserAndGetRandomly(long id) {
-        List<Kelime> bilmedigimKelimeRandomLimit1 = entityManager.createQuery("SELECT k.id,k.kelimeKey,k.kelimeValue\n" +
+        List<Kelime> bilmedigimKelimeRandomLimit1 = (List<Kelime>) entityManager.createQuery("SELECT k " +
                 "FROM Kelime as k  where k.id not in \n" +
                 "(SELECT bl.kelime.id\n" +
                 "FROM BilinenKelime as bl where bl.user.id = " + id + ") order by rand()" +
-                "\n").getResultList();
+                "\n").setMaxResults(1).getResultList();
+
+        List<Kelime> gelenUcYanlisSecenek = (List<Kelime>) entityManager.createQuery("SELECT k " +
+                "FROM Kelime as k  where k.id not in \n" +
+                "(SELECT k.id\n" +
+                "FROM Kelime as k where k.id= " + id + ") order by rand()" +
+                "\n").setMaxResults(3).getResultList();
+        boolean isAyniobje = false;
+        for (Kelime item : gelenUcYanlisSecenek) {
+            if (!gelenUcYanlisSecenek.contains(bilmedigimKelimeRandomLimit1.get(0)))
+                bilmedigimKelimeRandomLimit1.add(item);
+            else {
+                bilmedigimKelimeRandomLimit1.add(item);
+                isAyniobje = true;
+            }
+        }
+        if (isAyniobje) {
+            bilmedigimKelimeRandomLimit1.remove(0);
+        }
 
         return bilmedigimKelimeRandomLimit1;
     }
+
 
     @Override
     public List<Kelime> findByuser(long id) {

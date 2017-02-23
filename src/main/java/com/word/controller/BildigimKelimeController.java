@@ -33,7 +33,7 @@ public class BildigimKelimeController {
         BilinenKelime mybiBilinenKelime1 = new BilinenKelime();
         mybiBilinenKelime1.setKelime(bilinenKelime.getKelime());
         mybiBilinenKelime1.setUser(bilinenKelime.getUser());
-        iBildigimKelimeService.addkelime(mybiBilinenKelime1);
+        iBildigimKelimeService.addKelime(mybiBilinenKelime1);
     }
 
     @RequestMapping(value = "/bilinenkelimegetir",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
