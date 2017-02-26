@@ -5,7 +5,6 @@ import com.word.repository.impl.UserRepository;
 import com.word.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +24,8 @@ public class UserService implements IUserService {
 
     @Override
     public List<User> findAllUser() {
-      List<User> findAllUser = userRepository.findAll();
-      return findAllUser;
+        List<User> findAllUser = userRepository.findAll();
+        return findAllUser;
     }
 
     @Override
@@ -47,8 +46,10 @@ public class UserService implements IUserService {
 
         User mUser = userRepository.findById(user.getId());
 
+        mUser.setUserorjName(user.getUserorjName());
         mUser.setSurname(user.getSurname());
         mUser.setUserName(user.getUserName());
+        mUser.setUserMail(user.getUserMail());
 
         userRepository.merge(mUser);
     }

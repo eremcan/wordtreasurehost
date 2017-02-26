@@ -1,11 +1,7 @@
 package com.word.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,15 +11,22 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 public class User extends BaseEntity {
+    @NotNull
+    @Column(name = "isim")
+    private String userorjName;
 
-
+    @NotNull
+    @Column(name = "surname")
+    private String surname;
 
     @NotNull
     @Column(name = "username")
     private String userName;
+
     @NotNull
-    @Column(name = "surname")
-    private String surname;
+    @Column(name = "usermail")
+    private String userMail;
+
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<BilinenKelime> userBilinenKelime;
@@ -32,20 +35,12 @@ public class User extends BaseEntity {
         super();
     }
 
-   /* @ManyToMany(fetch =FetchType.EAGER)
-    @JoinTable(name = "join_bilinenkelimeler ",joinColumns = {@JoinColumn(name = "userid")},inverseJoinColumns = {@JoinColumn(name = "kelimeid")})
-    public List<Kelime> getKelime() {
-        return kelime;
-
-    } */
-
-
-    public String getUserName() {
-        return userName;
+    public String getUserorjName() {
+        return userorjName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserorjName(String userorjName) {
+        this.userorjName = userorjName;
     }
 
     public String getSurname() {
@@ -55,4 +50,22 @@ public class User extends BaseEntity {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserMail() {
+        return userMail;
+    }
+
+    public void setUserMail(String userMail) {
+        this.userMail = userMail;
+    }
+
+
 }

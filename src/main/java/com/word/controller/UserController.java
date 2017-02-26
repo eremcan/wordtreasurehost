@@ -43,4 +43,5 @@ public class UserController {
         return new ResponseEntity<Object>(
                 userService.findAllUser(), HttpStatus.OK);
     }
+   // @RequestMapping(value = "createuser",method = {RequestMethod.GET,)
 }
