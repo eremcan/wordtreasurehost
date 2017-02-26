@@ -42,6 +42,15 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public boolean checkExistUserName(String username) {
+        if(userRepository.checkExistName(username)){
+            return true;
+        }
+        else
+            return false;
+    }
+
+    @Override
     public void updateUser(User user) {
 
         User mUser = userRepository.findById(user.getId());
@@ -50,6 +59,7 @@ public class UserService implements IUserService {
         mUser.setSurname(user.getSurname());
         mUser.setUserName(user.getUserName());
         mUser.setUserMail(user.getUserMail());
+        mUser.setUserPassword(user.getUserPassword());
 
         userRepository.merge(mUser);
     }

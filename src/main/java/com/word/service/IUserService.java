@@ -17,4 +17,5 @@ public interface IUserService {
 
     void updateUser(User user);
 
+    boolean checkExistUserName(String username);
 }

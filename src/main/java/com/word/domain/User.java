@@ -24,6 +24,18 @@ public class User extends BaseEntity {
     private String userName;
 
     @NotNull
+    @Column(name = "password")
+    private String userPassword;
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    @NotNull
     @Column(name = "usermail")
     private String userMail;
 

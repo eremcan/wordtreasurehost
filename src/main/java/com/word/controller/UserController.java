@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Nahide on 09.02.2017.
@@ -43,5 +41,40 @@ public class UserController {
         return new ResponseEntity<Object>(
                 userService.findAllUser(), HttpStatus.OK);
     }
-   // @RequestMapping(value = "createuser",method = {RequestMethod.GET,)
+    @RequestMapping(value = "/createuser",method = RequestMethod.POST)
+    public String createUser(@RequestBody User user,Model md){
+        if(userService.checkExistUserName(user.getUserName())){
+            md.addAttribute("LoginError",true);
+            return "bu kullanici adi ile bir kullanici bulunmaktadir. Lutfen baska bir kullanici adi ile deneyiniz";
+        }
+        User newUser = new User();
+        newUser.setUserName(user.getUserName());
+        newUser.setUserorjName(user.getUserorjName());
+        newUser.setUserMail(user.getUserMail());
+        newUser.setSurname(user.getSurname());
+        newUser.setUserPassword(user.getUserPassword());
+        userService.saveUser(user);
+        return user.getId().toString();
+    }
+    /**
+    @RequestMapping(value = "/createuser",method = {RequestMethod.GET,RequestMethod.POST})
+    public String createUser(@RequestParam String userorjName,
+                             @RequestParam String surname,
+                             @RequestParam String username ,
+                             @RequestParam String usermail,
+                             Model md){
+        if(userService.checkExistUserName(username)){
+            md.addAttribute("LoginError",true);
+            return "bu kullanici adi ile bir kullanici bulunmaktadir. Lutfen baska bir kullanici adi ile deneyiniz";
+        }
+        User user = new User();
+        user.setUserName(username);
+        user.setUserorjName(userorjName);
+        user.setUserMail(usermail);
+        user.setSurname(surname);
+        userService.saveUser(user);
+        return "saved";
+    }
+                             */
+
 }
