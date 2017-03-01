@@ -2,6 +2,7 @@ package com.word.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -12,20 +13,30 @@ import java.util.Set;
 @Table(name = "user")
 public class User extends BaseEntity {
     @NotNull
-    @Column(name = "isim")
-    private String userorjName;
+    @Column(name = "firstname")
+    private String firstname;
 
     @NotNull
     @Column(name = "surname")
     private String surname;
-
     @NotNull
     @Column(name = "username")
     private String userName;
-
     @NotNull
     @Column(name = "password")
     private String userPassword;
+
+    @NotNull
+    @Column(name = "usermail")
+    private String userMail;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<BilinenKelime> userBilinenKelime;
+
+    public User() {
+        super();
+    }
+
 
     public String getUserPassword() {
         return userPassword;
@@ -35,24 +46,12 @@ public class User extends BaseEntity {
         this.userPassword = userPassword;
     }
 
-    @NotNull
-    @Column(name = "usermail")
-    private String userMail;
-
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<BilinenKelime> userBilinenKelime;
-
-    public User() {
-        super();
+    public String getFirstname() {
+        return firstname;
     }
 
-    public String getUserorjName() {
-        return userorjName;
-    }
-
-    public void setUserorjName(String userorjName) {
-        this.userorjName = userorjName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getSurname() {

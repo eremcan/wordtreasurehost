@@ -55,7 +55,7 @@ public class UserService implements IUserService {
 
         User mUser = userRepository.findById(user.getId());
 
-        mUser.setUserorjName(user.getUserorjName());
+        mUser.setFirstname(user.getFirstname());
         mUser.setSurname(user.getSurname());
         mUser.setUserName(user.getUserName());
         mUser.setUserMail(user.getUserMail());

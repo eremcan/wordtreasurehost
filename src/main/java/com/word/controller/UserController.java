@@ -2,7 +2,6 @@ package com.word.controller;
 
 import com.word.domain.User;
 import com.word.service.IUserService;
-import com.word.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -49,7 +48,7 @@ public class UserController {
         }
         User newUser = new User();
         newUser.setUserName(user.getUserName());
-        newUser.setUserorjName(user.getUserorjName());
+        newUser.setFirstname(user.getFirstname());
         newUser.setUserMail(user.getUserMail());
         newUser.setSurname(user.getSurname());
         newUser.setUserPassword(user.getUserPassword());
@@ -69,7 +68,7 @@ public class UserController {
         }
         User user = new User();
         user.setUserName(username);
-        user.setUserorjName(userorjName);
+        user.setFirstname(userorjName);
         user.setUserMail(usermail);
         user.setSurname(surname);
         userService.saveUser(user);
