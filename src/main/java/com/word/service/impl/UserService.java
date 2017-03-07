@@ -49,10 +49,9 @@ public class UserService implements IUserService {
 
     @Override
     public boolean checkExistUserName(String username) {
-        if(userRepository.checkExistName(username)){
+        if (userRepository.checkExistName(username)) {
             return true;
-        }
-        else
+        } else
             return false;
     }
 

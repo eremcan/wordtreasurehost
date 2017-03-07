@@ -16,14 +16,23 @@ public class UserRepository extends CommonDao<User, Long> implements IUserReposi
     public User findByUserName(String username) {
         User user = new User();
         user.setUserName(username);
-        user.setUserName("banane");
-        user.setUserPassword("password");
-        user.setId(1l);
-        user.setFirstname("ahmedi");
-        user.setUserMail("bla@gmail.com");
-
-        //  List<User> userList = findByExample(user);
-        return user;
+        List<User> userList = findByExample(user);
+        //kullanici adi hatalı.
+        if (userList == null)
+            return null;
+        user.setUserPassword(userList.get(0).getUserPassword());
+        userList = findByExample(user);
+        //sifre yalnış geldi.
+        if (userList == null)
+            return null;
+        else {
+            user.setUserName(userList.get(0).getUserName());
+            user.setFirstname(userList.get(0).getFirstname());
+            user.setSurname(userList.get(0).getSurname());
+            user.setUserPassword(userList.get(0).getUserPassword());
+            user.setUserMail(userList.get(0).getUserMail());
+            return user;
+        }
     }
 
     @Override
