@@ -29,6 +29,12 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User getUserbyUsername(String username) {
+        User user = userRepository.findByUserName(username);
+        return user;
+    }
+
+    @Override
     public void saveUser(User user) {
 
         if (user != null) {

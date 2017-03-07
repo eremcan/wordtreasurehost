@@ -11,6 +11,8 @@ public interface IUserService {
 
     void saveUser(User user);
 
+    User getUserbyUsername(String username);
+
     User getUserById(Long id);
 
     List<User> findAllUser();

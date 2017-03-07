@@ -7,4 +7,5 @@ import com.word.domain.User;
  */
 public interface IUserRepository extends ICommonDao<User,Long>{
     boolean checkExistName(String username);
+    User findByUserName(String username);
 }

@@ -35,8 +35,11 @@ public class TokenAuthenticationService {
                     .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
+
             if (username != null) // Username i aldık
             {
+
+
                 return new AuthenticatedUser(username);
             }
         }

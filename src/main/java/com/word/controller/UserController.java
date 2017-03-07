@@ -35,15 +35,17 @@ public class UserController {
             return new ResponseEntity<>("Kullanıcı Bulunamadı", HttpStatus.BAD_REQUEST);
         }
     }
-    @RequestMapping(value = "/getalluser",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllUser(){
+
+    @RequestMapping(value = "/getalluser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllUser() {
         return new ResponseEntity<Object>(
                 userService.findAllUser(), HttpStatus.OK);
     }
-    @RequestMapping(value = "/createuser",method = RequestMethod.POST)
-    public String createUser(@RequestBody User user,Model md){
-        if(userService.checkExistUserName(user.getUserName())){
-            md.addAttribute("LoginError",true);
+
+    @RequestMapping(value = "/createuser", method = RequestMethod.POST)
+    public String createUser(@RequestBody User user, Model md) {
+        if (userService.checkExistUserName(user.getUserName())) {
+            md.addAttribute("LoginError", true);
             return "bu kullanici adi ile bir kullanici bulunmaktadir. Lutfen baska bir kullanici adi ile deneyiniz";
         }
         User newUser = new User();
@@ -55,25 +57,31 @@ public class UserController {
         userService.saveUser(user);
         return user.getId().toString();
     }
-    /**
-    @RequestMapping(value = "/createuser",method = {RequestMethod.GET,RequestMethod.POST})
-    public String createUser(@RequestParam String userorjName,
-                             @RequestParam String surname,
-                             @RequestParam String username ,
-                             @RequestParam String usermail,
-                             Model md){
-        if(userService.checkExistUserName(username)){
-            md.addAttribute("LoginError",true);
-            return "bu kullanici adi ile bir kullanici bulunmaktadir. Lutfen baska bir kullanici adi ile deneyiniz";
-        }
-        User user = new User();
-        user.setUserName(username);
-        user.setFirstname(userorjName);
-        user.setUserMail(usermail);
-        user.setSurname(surname);
-        userService.saveUser(user);
-        return "saved";
-    }
-                             */
 
+    @RequestMapping(value = "/getadmin", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getadminUser() {
+        return new ResponseEntity<Object>(
+                userService.getUserbyUsername("admin"), HttpStatus.OK);
+        /**
+         @RequestMapping(value = "/createuser",method = {RequestMethod.GET,RequestMethod.POST})
+         public String createUser(@RequestParam String userorjName,
+         @RequestParam String surname,
+         @RequestParam String username ,
+         @RequestParam String usermail,
+         Model md){
+         if(userService.checkExistUserName(username)){
+         md.addAttribute("LoginError",true);
+         return "bu kullanici adi ile bir kullanici bulunmaktadir. Lutfen baska bir kullanici adi ile deneyiniz";
+         }
+         User user = new User();
+         user.setUserName(username);
+         user.setFirstname(userorjName);
+         user.setUserMail(usermail);
+         user.setSurname(surname);
+         userService.saveUser(user);
+         return "saved";
+         }
+         */
+
+    }
 }
