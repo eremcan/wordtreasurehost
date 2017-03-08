@@ -39,7 +39,6 @@ public class TokenAuthenticationService {
             if (username != null) // Username i aldık
             {
 
-
                 return new AuthenticatedUser(username);
             }
         }

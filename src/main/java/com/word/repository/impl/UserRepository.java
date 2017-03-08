@@ -17,13 +17,7 @@ public class UserRepository extends CommonDao<User, Long> implements IUserReposi
         User user = new User();
         user.setUserName(username);
         List<User> userList = findByExample(user);
-        //kullanici adi hatalı.
-        if (userList == null)
-            return null;
-        user.setUserPassword(userList.get(0).getUserPassword());
-        userList = findByExample(user);
-        //sifre yalnış geldi.
-        if (userList == null)
+        if (userList.size()==0)
             return null;
         else {
             user.setUserName(userList.get(0).getUserName());

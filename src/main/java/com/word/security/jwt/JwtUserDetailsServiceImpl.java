@@ -1,7 +1,6 @@
 package com.word.security.jwt;
 
 import com.word.domain.User;
-import com.word.repository.impl.UserRepository;
 import com.word.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,11 +15,11 @@ import org.springframework.stereotype.Service;
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserService userRepository;
+    private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.getUserbyUsername(username);
+        User user = userService.getUserbyUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
