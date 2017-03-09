@@ -62,9 +62,9 @@ public class UserService implements IUserService {
 
         mUser.setFirstname(user.getFirstname());
         mUser.setSurname(user.getSurname());
-        mUser.setUserName(user.getUserName());
-        mUser.setUserMail(user.getUserMail());
-        mUser.setUserPassword(user.getUserPassword());
+        mUser.setUsername(user.getUsername());
+        mUser.setEmail(user.getEmail());
+        mUser.setPassword(user.getPassword());
 
         userRepository.merge(mUser);
     }

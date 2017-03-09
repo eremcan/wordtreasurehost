@@ -10,11 +10,11 @@ public final class JwtUserFactory {
     public static JwtUser create(User user) {
         return new JwtUser(
                 user.getId(),
-                user.getUserName(),
+                user.getUsername(),
                 user.getFirstname(),
                 user.getSurname(),
-                user.getUserMail(),
-                user.getUserPassword()
+                user.getEmail(),
+                user.getPassword()
         );
     }
 

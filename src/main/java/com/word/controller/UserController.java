@@ -54,22 +54,22 @@ public class UserController {
     @RequestMapping(value = "/createuser", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@RequestBody User user, HttpServletResponse response) {
 
-        if (userService.checkExistUserName(user.getUserName())) {
+        if (userService.checkExistUserName(user.getUsername())) {
 
             return new ResponseEntity<Object>("bu kullanici adi ile bir kullanici bulunmaktadir. Lutfen baska bir kullanici adi ile deneyiniz", HttpStatus.NOT_IMPLEMENTED);
         }
         else{
         User newUser = new User();
-        newUser.setUserName(user.getUserName());
+        newUser.setUsername(user.getUsername());
         newUser.setFirstname(user.getFirstname());
-        newUser.setUserMail(user.getUserMail());
+        newUser.setEmail(user.getEmail());
         newUser.setSurname(user.getSurname());
-        newUser.setUserPassword(user.getUserPassword());
+        newUser.setPassword(user.getPassword());
         userService.saveUser(user);
-        securityService.autologin(user.getUserName(), user.getUserPassword());
+        securityService.autologin(user.getUsername(), user.getPassword());
 
         TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationService();
-        tokenAuthenticationService.addAuthentication(response, user.getUserName());
+        tokenAuthenticationService.addAuthentication(response, user.getUsername());
 
         return new ResponseEntity<Object>(user.getId().toString(), HttpStatus.OK);
     }}

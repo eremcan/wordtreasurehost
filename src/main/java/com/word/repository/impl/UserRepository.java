@@ -15,7 +15,7 @@ public class UserRepository extends CommonDao<User, Long> implements IUserReposi
     @Override
     public User findByUserName(String username) {
         User user = new User();
-        user.setUserName(username);
+        user.setUsername(username);
         List<User> userList = findByExample(user);
         if (userList.size()==0)
             return null;
@@ -27,7 +27,7 @@ public class UserRepository extends CommonDao<User, Long> implements IUserReposi
     @Override
     public boolean checkExistName(String username) {
         User exampleInstance = new User();
-        exampleInstance.setUserName(username);
+        exampleInstance.setUsername(username);
         List<User> userList = findByExample(exampleInstance);
         if (!userList.isEmpty())
             return true;

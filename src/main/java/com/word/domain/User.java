@@ -2,7 +2,6 @@ package com.word.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -21,14 +20,14 @@ public class User extends BaseEntity {
     private String surname;
     @NotNull
     @Column(name = "username")
-    private String userName;
+    private String username;
     @NotNull
     @Column(name = "password")
-    private String userPassword;
+    private String password;
 
     @NotNull
     @Column(name = "usermail")
-    private String userMail;
+    private String email;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<BilinenKelime> userBilinenKelime;
@@ -38,12 +37,12 @@ public class User extends BaseEntity {
     }
 
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setPassword(String userPassword) {
+        this.password = userPassword;
     }
 
     public String getFirstname() {
@@ -62,20 +61,20 @@ public class User extends BaseEntity {
         this.surname = surname;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
-    public String getUserMail() {
-        return userMail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserMail(String userMail) {
-        this.userMail = userMail;
+    public void setEmail(String userMail) {
+        this.email = userMail;
     }
 
 
