@@ -1,10 +1,6 @@
 package com.word.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 
 /**
  * Created by Nahide on 10.02.2017.
@@ -13,13 +9,13 @@ import javax.validation.constraints.NotNull;
 @Table(name = "bilinenkelime")
 public class BilinenKelime extends BaseEntity {
 
-    @NotNull
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @NotNull
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "kelime_id", referencedColumnName = "id")
     private Kelime kelime;
 

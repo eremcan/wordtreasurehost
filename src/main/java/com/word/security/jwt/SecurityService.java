@@ -2,7 +2,7 @@ package com.word.security.jwt;
 
 
 import com.word.domain.User;
-import com.word.service.impl.UserService;
+import com.word.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,12 +24,12 @@ public class SecurityService {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private UserService userAPI;
+    private IUserService userAPI;
 
 
     public User activeUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username =  auth.getName();
+        String username = auth.getName();
         User user = userAPI.getUserbyUsername(username);
 
 
@@ -48,4 +48,4 @@ public class SecurityService {
         }
     }
 }
-	
+

@@ -19,8 +19,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     private TokenAuthenticationService tokenAuthenticationService;
 
-    public JWTLoginFilter(String url, AuthenticationManager authenticationManager)
-    {
+    public JWTLoginFilter(String url, AuthenticationManager authenticationManager) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authenticationManager);
         tokenAuthenticationService = new TokenAuthenticationService();
@@ -29,7 +28,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws AuthenticationException, IOException, ServletException {
-        AccountCredentials credentials = new ObjectMapper().readValue(httpServletRequest.getInputStream(),AccountCredentials.class);
+        AccountCredentials credentials = new ObjectMapper().readValue(httpServletRequest.getInputStream(), AccountCredentials.class);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword());
         return getAuthenticationManager().authenticate(token);
     }
@@ -38,6 +37,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication)
             throws IOException, ServletException {
         String name = authentication.getName();
-        tokenAuthenticationService.addAuthentication(response,name);
+        tokenAuthenticationService.addAuthentication(response, name);
     }
 }

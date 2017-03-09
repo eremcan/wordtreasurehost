@@ -24,7 +24,7 @@ public class Kelime extends BaseEntity {
     @Column(name = "kelime_value")
     private String kelimeValue;
 
-    @NotNull
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "kelime")
     private Set<BilinenKelime> bilinenKelimeList;
 

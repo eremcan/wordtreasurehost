@@ -20,12 +20,7 @@ public class UserRepository extends CommonDao<User, Long> implements IUserReposi
         if (userList.size()==0)
             return null;
         else {
-            user.setUserName(userList.get(0).getUserName());
-            user.setFirstname(userList.get(0).getFirstname());
-            user.setSurname(userList.get(0).getSurname());
-            user.setUserPassword(userList.get(0).getUserPassword());
-            user.setUserMail(userList.get(0).getUserMail());
-            return user;
+            return userList.get(0);
         }
     }
 

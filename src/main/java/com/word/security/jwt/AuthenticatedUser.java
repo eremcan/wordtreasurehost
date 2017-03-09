@@ -11,7 +11,7 @@ public class AuthenticatedUser implements Authentication {
     private String name;
     private boolean authenticated = true;
 
-    AuthenticatedUser(String name){
+    AuthenticatedUser(String name) {
         this.name = name;
     }
 
