@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -43,7 +41,7 @@ public class UserController {
                 return new ResponseEntity<>("Kullanıcı Bulunamadı", HttpStatus.NOT_FOUND);
             }
         } catch (Exception ex) {
-            return new ResponseEntity<>("Kullanıcı Bulunamadı", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Kullanıcı Bulunamadıcatch", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -54,12 +52,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/createuser", method = RequestMethod.POST)
-    public String createUser(@RequestBody User user, Model md, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> createUser(@RequestBody User user, HttpServletResponse response) {
 
         if (userService.checkExistUserName(user.getUserName())) {
-            md.addAttribute("LoginError", true);
-            return "bu kullanici adi ile bir kullanici bulunmaktadir. Lutfen baska bir kullanici adi ile deneyiniz";
+
+            return new ResponseEntity<Object>("bu kullanici adi ile bir kullanici bulunmaktadir. Lutfen baska bir kullanici adi ile deneyiniz", HttpStatus.NOT_IMPLEMENTED);
         }
+        else{
         User newUser = new User();
         newUser.setUserName(user.getUserName());
         newUser.setFirstname(user.getFirstname());
@@ -67,39 +66,18 @@ public class UserController {
         newUser.setSurname(user.getSurname());
         newUser.setUserPassword(user.getUserPassword());
         userService.saveUser(user);
-        // jwtUserDetailsService.signedUpwithUsername(user.getUserName(),user.getUserPassword());
         securityService.autologin(user.getUserName(), user.getUserPassword());
 
         TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationService();
-
         tokenAuthenticationService.addAuthentication(response, user.getUserName());
-        return user.getId().toString();
-    }
+
+        return new ResponseEntity<Object>(user.getId().toString(), HttpStatus.OK);
+    }}
 
     @RequestMapping(value = "/getadmin", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getadminUser() {
         return new ResponseEntity<Object>(
                 userService.getUserbyUsername("admin"), HttpStatus.OK);
-        /**
-         @RequestMapping(value = "/createuser",method = {RequestMethod.GET,RequestMethod.POST})
-         public String createUser(@RequestParam String userorjName,
-         @RequestParam String surname,
-         @RequestParam String username ,
-         @RequestParam String usermail,
-         Model md){
-         if(userService.checkExistUserName(username)){
-         md.addAttribute("LoginError",true);
-         return "bu kullanici adi ile bir kullanici bulunmaktadir. Lutfen baska bir kullanici adi ile deneyiniz";
-         }
-         User user = new User();
-         user.setUserName(username);
-         user.setFirstname(userorjName);
-         user.setUserMail(usermail);
-         user.setSurname(surname);
-         userService.saveUser(user);
-         return "saved";
-         }
-         */
 
     }
 }
