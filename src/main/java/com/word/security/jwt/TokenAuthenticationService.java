@@ -16,15 +16,18 @@ public class TokenAuthenticationService {
     private String tokenPrefix = "Bearer";
     private String headerString = "Authorization";
 
-    public void addAuthentication(HttpServletResponse response, String username) {
+    public String addAuthentication(HttpServletResponse response, String username) {
         //Token GENERATE EDİLİR.
+        String token;
         String JWT = Jwts.builder()
                 .setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
         response.addHeader(headerString, tokenPrefix + " " + JWT);
+        return token = tokenPrefix + " "+JWT;
     }
+
 
     public Authentication getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(headerString);

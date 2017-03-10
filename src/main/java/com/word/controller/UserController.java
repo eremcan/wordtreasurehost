@@ -1,5 +1,6 @@
 package com.word.controller;
 
+import com.word.domain.Token;
 import com.word.domain.User;
 import com.word.security.jwt.JwtUserDetailsServiceImpl;
 import com.word.security.jwt.SecurityService;
@@ -51,28 +52,32 @@ public class UserController {
                 userService.findAllUser(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/createuser", method = RequestMethod.POST)
+    @RequestMapping(value = "/createuser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public ResponseEntity<?> createUser(@RequestBody User user, HttpServletResponse response) {
+        {
+        }
 
         if (userService.checkExistUserName(user.getUsername())) {
 
-            return new ResponseEntity<Object>("bu kullanici adi ile bir kullanici bulunmaktadir. Lutfen baska bir kullanici adi ile deneyiniz", HttpStatus.NOT_IMPLEMENTED);
+            return new ResponseEntity<>("bu kullanici adi ile bir kullanici bulunmaktadir. Lutfen baska bir kullanici adi ile deneyiniz", HttpStatus.OK);
+        } else {
+            User newUser = new User();
+            newUser.setUsername(user.getUsername());
+            newUser.setFirstname(user.getFirstname());
+            newUser.setEmail(user.getEmail());
+            newUser.setSurname(user.getSurname());
+            newUser.setPassword(user.getPassword());
+            userService.saveUser(user);
+            securityService.autologin(user.getUsername(), user.getPassword());
+
+            TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationService();
+            String a = tokenAuthenticationService.addAuthentication(response, user.getUsername());
+            Token token = new Token();
+            token.setToken(a);
+            return new ResponseEntity<Object>(token, HttpStatus.OK);
         }
-        else{
-        User newUser = new User();
-        newUser.setUsername(user.getUsername());
-        newUser.setFirstname(user.getFirstname());
-        newUser.setEmail(user.getEmail());
-        newUser.setSurname(user.getSurname());
-        newUser.setPassword(user.getPassword());
-        userService.saveUser(user);
-        securityService.autologin(user.getUsername(), user.getPassword());
-
-        TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationService();
-        tokenAuthenticationService.addAuthentication(response, user.getUsername());
-
-        return new ResponseEntity<Object>(user.getId().toString(), HttpStatus.OK);
-    }}
+    }
 
     @RequestMapping(value = "/getadmin", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getadminUser() {
