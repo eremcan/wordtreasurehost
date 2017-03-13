@@ -34,4 +34,15 @@ public class UserRepository extends CommonDao<User, Long> implements IUserReposi
         else
             return false;
     }
+
+    @Override
+    public boolean checkExistEmail(String email) {
+        User exampleInstance = new User();
+        exampleInstance.setEmail(email);
+        List<User> userList = findByExample(exampleInstance);
+        if (!userList.isEmpty())
+            return true;
+        else
+            return false;
+    }
 }

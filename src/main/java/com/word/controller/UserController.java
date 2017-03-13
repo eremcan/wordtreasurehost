@@ -55,12 +55,14 @@ public class UserController {
     @RequestMapping(value = "/createuser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<?> createUser(@RequestBody User user, HttpServletResponse response) {
-        {
+        Token token = new Token();
+        if (userService.checkExistEmail(user.getEmail())) {
+            token.setToken("mail duplicating");
+            return new ResponseEntity<>(token, HttpStatus.OK);
         }
-
         if (userService.checkExistUserName(user.getUsername())) {
-
-            return new ResponseEntity<>("bu kullanici adi ile bir kullanici bulunmaktadir. Lutfen baska bir kullanici adi ile deneyiniz", HttpStatus.OK);
+            token.setToken("user duplicating");
+            return new ResponseEntity<>(token, HttpStatus.OK);
         } else {
             User newUser = new User();
             newUser.setUsername(user.getUsername());
@@ -73,7 +75,6 @@ public class UserController {
 
             TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationService();
             String a = tokenAuthenticationService.addAuthentication(response, user.getUsername());
-            Token token = new Token();
             token.setToken(a);
             return new ResponseEntity<Object>(token, HttpStatus.OK);
         }

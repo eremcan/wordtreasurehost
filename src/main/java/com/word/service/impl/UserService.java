@@ -29,6 +29,15 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public boolean checkExistEmail(String email) {
+        if (userRepository.checkExistEmail(email)) {
+            return true;
+        } else
+            return false;
+    }
+
+
+    @Override
     public User getUserbyUsername(String username) {
         User user = userRepository.findByUserName(username);
         return user;
