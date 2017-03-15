@@ -80,6 +80,24 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/loginuser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> loginUser(@RequestBody User user, HttpServletResponse response) {
+        Token token = new Token();
+        User newUser = new User();
+        newUser.setUsername(user.getUsername());
+        newUser.setPassword(user.getPassword());
+        securityService.autologin(user.getUsername(), user.getPassword());
+        TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationService();
+        String a = tokenAuthenticationService.addAuthentication(response, user.getUsername());
+        if (a.contains("Bearer "))
+            token.setToken(a);
+        else
+            token.setToken("loginError");
+
+        return new ResponseEntity<Object>(token, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/getadmin", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getadminUser() {
         return new ResponseEntity<Object>(
