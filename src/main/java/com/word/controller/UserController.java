@@ -10,6 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.UsersConnectionRepository;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by Nahide on 09.02.2017.
  */
-
+@RequestMapping("/")
 @RestController
 public class UserController {
 
@@ -27,6 +33,8 @@ public class UserController {
     JwtUserDetailsServiceImpl jwtUserDetailsService;
     @Autowired
     SecurityService securityService;
+    private Facebook facebook;
+    private ConnectionRepository connectionRepository;
 
 
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -104,4 +112,25 @@ public class UserController {
                 userService.getUserbyUsername("admin"), HttpStatus.OK);
 
     }
+
+    @Autowired
+    private FacebookConnectionFactory facebookConnectionFactory;
+
+    @Autowired
+    private UsersConnectionRepository usersConnectionRepository;
+
+    @RequestMapping(value = "/connectara", method = RequestMethod.POST)
+    public String fb(@RequestBody Token token) {
+        AccessGrant accessGrant = new AccessGrant("token");
+        Connection<Facebook> connection = facebookConnectionFactory.createConnection(accessGrant);
+        Facebook facebook = connection.getApi();
+        String[] fields = {"first_name", "last_name", "email"};
+        User userProfile = facebook.fetchObject("me", User.class, fields);
+        String name = userProfile.getFirstname();
+
+        // ...
+
+        return "Done";
+    }
+
 }

@@ -32,7 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/bilinenkelimerandom/2").permitAll()
                 .antMatchers(HttpMethod.POST, "/createuser").permitAll()
-                .antMatchers(HttpMethod.POST,"/loginuser").permitAll()
+                .antMatchers(HttpMethod.POST, "/loginuser").permitAll()
+                .antMatchers(HttpMethod.POST, "/connectara").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // We filter the api/login requests
@@ -47,5 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         System.out.print("asdasd");
         auth.userDetailsService(this.userDetailsService);
     }
+
 
 }

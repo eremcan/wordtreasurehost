@@ -1,5 +1,8 @@
 package com.word.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
@@ -11,6 +14,12 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 public class User extends BaseEntity {
+    public User(String firstname, String surname, String email) {
+        this.firstname = firstname;
+        this.surname = surname;
+        this.email = email;
+    }
+
     @NotNull
     @Column(name = "firstname")
     private String firstname;
@@ -18,9 +27,11 @@ public class User extends BaseEntity {
     @NotNull
     @Column(name = "surname")
     private String surname;
+
     @NotNull
     @Column(name = "username")
     private String username;
+
     @NotNull
     @Column(name = "password")
     private String password;

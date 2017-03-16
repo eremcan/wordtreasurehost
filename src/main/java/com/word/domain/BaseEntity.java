@@ -1,16 +1,19 @@
 package com.word.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by Nahide on 09.02.2017.
  */
 @MappedSuperclass
 public class BaseEntity implements Serializable {
-
+    @JsonIgnoreProperties(ignoreUnknown = true)
     @SuppressWarnings("serial")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
