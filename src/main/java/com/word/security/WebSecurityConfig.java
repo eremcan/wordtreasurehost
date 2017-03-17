@@ -32,11 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/bilinenkelimerandom/2").permitAll()
                 .antMatchers(HttpMethod.POST, "/createuser").permitAll()
-<<<<<<< HEAD
-                .antMatchers(HttpMethod.POST,"/loginuser").permitAll()
-=======
                 .antMatchers(HttpMethod.POST, "/loginuser").permitAll()
->>>>>>> 823daa1d6eeb478dff8b82087e0a09d1fc91af1a
                 .antMatchers(HttpMethod.POST, "/connectara").permitAll()
                 .anyRequest().authenticated()
                 .and()
