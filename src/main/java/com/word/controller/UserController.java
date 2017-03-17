@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by Nahide on 09.02.2017.
  */
-
+@RequestMapping("/")
 @RestController
 public class UserController {
 
@@ -33,6 +33,8 @@ public class UserController {
     JwtUserDetailsServiceImpl jwtUserDetailsService;
     @Autowired
     SecurityService securityService;
+    private Facebook facebook;
+    private ConnectionRepository connectionRepository;
 
     private ConnectionRepository connectionRepository;
 
@@ -120,6 +122,7 @@ public class UserController {
     private UsersConnectionRepository usersConnectionRepository;
 
     @RequestMapping(value = "/connectara", method = RequestMethod.POST)
+<<<<<<< HEAD
     public ResponseEntity<?> loginUser(@RequestBody Token token, HttpServletResponse response) {
 
         AccessGrant accessGrant = new AccessGrant(token.getToken());
@@ -150,4 +153,19 @@ public class UserController {
 
         return new ResponseEntity<Object>(token, HttpStatus.OK);
     }
+=======
+    public String fb(@RequestBody Token token) {
+        AccessGrant accessGrant = new AccessGrant("token");
+        Connection<Facebook> connection = facebookConnectionFactory.createConnection(accessGrant);
+        Facebook facebook = connection.getApi();
+        String[] fields = {"first_name", "last_name", "email"};
+        User userProfile = facebook.fetchObject("me", User.class, fields);
+        String name = userProfile.getFirstname();
+
+        // ...
+
+        return "Done";
+    }
+
+>>>>>>> 823daa1d6eeb478dff8b82087e0a09d1fc91af1a
 }

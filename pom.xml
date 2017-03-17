@@ -74,12 +74,24 @@
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-facebook</artifactId>
         </dependency>
+<<<<<<< HEAD
+=======
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-web</artifactId>
+            <version>1.1.4.RELEASE</version>
+        </dependency>
+>>>>>>> 823daa1d6eeb478dff8b82087e0a09d1fc91af1a
         <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-security -->
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-security</artifactId>
             <version>1.1.0.RELEASE</version>
         </dependency>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 823daa1d6eeb478dff8b82087e0a09d1fc91af1a
 
 
     </dependencies>
