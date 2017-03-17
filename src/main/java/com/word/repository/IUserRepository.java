@@ -10,4 +10,6 @@ public interface IUserRepository extends ICommonDao<User,Long>{
     User findByUserName(String username);
 
     boolean checkExistEmail(String email);
+
+    boolean checkExistFbId(String id);
 }

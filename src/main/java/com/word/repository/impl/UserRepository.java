@@ -13,11 +13,23 @@ import java.util.List;
 public class UserRepository extends CommonDao<User, Long> implements IUserRepository {
 
     @Override
+    public boolean checkExistFbId(String id) {
+        User user = new User();
+        user.setFacebookid(id);
+        List<User> userList = findByExample(user);
+        if (!userList.isEmpty())
+            return true;
+        else
+            return false;
+    }
+
+
+    @Override
     public User findByUserName(String username) {
         User user = new User();
         user.setUsername(username);
         List<User> userList = findByExample(user);
-        if (userList.size()==0)
+        if (userList.size() == 0)
             return null;
         else {
             return userList.get(0);

@@ -10,6 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.UsersConnectionRepository;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +33,8 @@ public class UserController {
     JwtUserDetailsServiceImpl jwtUserDetailsService;
     @Autowired
     SecurityService securityService;
+
+    private ConnectionRepository connectionRepository;
 
 
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -103,5 +111,43 @@ public class UserController {
         return new ResponseEntity<Object>(
                 userService.getUserbyUsername("admin"), HttpStatus.OK);
 
+    }
+
+    @Autowired
+    private FacebookConnectionFactory facebookConnectionFactory;
+
+    @Autowired
+    private UsersConnectionRepository usersConnectionRepository;
+
+    @RequestMapping(value = "/connectara", method = RequestMethod.POST)
+    public ResponseEntity<?> loginUser(@RequestBody Token token, HttpServletResponse response) {
+
+        AccessGrant accessGrant = new AccessGrant(token.getToken());
+        Connection<Facebook> connection = facebookConnectionFactory.createConnection(accessGrant);
+        Facebook facebook = connection.getApi();
+        String[] fields = {"first_name", "last_name", "email"};
+        org.springframework.social.facebook.api.User userProfile = facebook.fetchObject("me", org.springframework.social.facebook.api.User.class, fields);
+        User user = new User();
+        user.setEmail(userProfile.getEmail());
+        user.setPassword(userProfile.getId() + "bbb");
+        user.setFirstname(userProfile.getFirstName());
+        user.setSurname(userProfile.getLastName());
+        user.setFacebookid(userProfile.getId());
+        user.setUsername(userProfile.getFirstName() + userProfile.getLastName());
+
+
+        if (!userService.checkExistFbId(userProfile.getId())) {
+            userService.saveUser(user);
+        }
+        securityService.autologin(user.getUsername(), user.getPassword());
+        TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationService();
+        String a = tokenAuthenticationService.addAuthentication(response, user.getUsername());
+
+        if (a.contains("Bearer "))
+            token.setToken(a);
+        else
+            token.setToken("loginError");
+
+        return new ResponseEntity<Object>(token, HttpStatus.OK);
     }
 }

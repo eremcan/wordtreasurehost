@@ -22,4 +22,6 @@ public interface IUserService {
     boolean checkExistUserName(String username);
 
     boolean checkExistEmail(String email);
+
+    boolean checkExistFbId(String id);
 }

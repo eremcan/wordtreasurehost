@@ -26,6 +26,10 @@ public class User extends BaseEntity {
     private String password;
 
     @NotNull
+    @Column(name = "facebookid")
+    private String facebookid;
+
+    @NotNull
     @Column(name = "usermail")
     private String email;
 
@@ -36,6 +40,13 @@ public class User extends BaseEntity {
         super();
     }
 
+    public String getFacebookid() {
+        return facebookid;
+    }
+
+    public void setFacebookid(String facebookid) {
+        this.facebookid = facebookid;
+    }
 
     public String getPassword() {
         return password;

@@ -38,6 +38,14 @@ public class UserService implements IUserService {
 
 
     @Override
+    public boolean checkExistFbId(String id) {
+        if (userRepository.checkExistFbId(id)) {
+            return true;
+        } else
+            return false;
+    }
+
+    @Override
     public User getUserbyUsername(String username) {
         User user = userRepository.findByUserName(username);
         return user;
