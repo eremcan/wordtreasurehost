@@ -96,19 +96,18 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.4.11</version>
                 <configuration>
-                    <imageName>springio/word</imageName>
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
-                            <directory>src/main/docker</directory>
-                            <include>project.build.wordtreasure.jar</include>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
                 </configuration>
             </plugin>
         </plugins>
-
 
 
     </build>
