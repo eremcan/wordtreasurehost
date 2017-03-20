@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.oauth2.AccessGrant;
@@ -114,8 +113,6 @@ public class UserController {
     @Autowired
     private FacebookConnectionFactory facebookConnectionFactory;
 
-    @Autowired
-    private UsersConnectionRepository usersConnectionRepository;
 
     @RequestMapping(value = "/connectara", method = RequestMethod.POST)
     public ResponseEntity<?> loginUser(@RequestBody Token token, HttpServletResponse response) {
@@ -149,17 +146,5 @@ public class UserController {
         return new ResponseEntity<Object>(token, HttpStatus.OK);
     }
 
-    public String fb(@RequestBody Token token) {
-        AccessGrant accessGrant = new AccessGrant("token");
-        Connection<Facebook> connection = facebookConnectionFactory.createConnection(accessGrant);
-        Facebook facebook = connection.getApi();
-        String[] fields = {"first_name", "last_name", "email"};
-        User userProfile = facebook.fetchObject("me", User.class, fields);
-        String name = userProfile.getFirstname();
-
-        // ...
-
-        return "Done";
-    }
 
 }
