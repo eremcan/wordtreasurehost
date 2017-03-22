@@ -36,7 +36,7 @@ public class User extends BaseEntity {
     @Column(name = "password")
     private String password;
 
-    @NotNull
+
     @Column(name = "facebookid")
     private String facebookid;
 
