@@ -26,7 +26,7 @@ public class BildigimKelimeRepository extends CommonDao<BilinenKelime, Long> imp
         List<Kelime> gelenUcYanlisSecenek = entityManager.createQuery("SELECT k " +
                 "FROM Kelime as k \n" +
                 "ORDER BY rand()" +
-                "\n").setMaxResults(3).getResultList();
+                "\n").setMaxResults(4).getResultList();
         boolean isAyniobje = false;
         for (Kelime item : gelenUcYanlisSecenek) {
             if (!gelenUcYanlisSecenek.contains(bilmedigimKelimeRandomLimit1.get(0)))

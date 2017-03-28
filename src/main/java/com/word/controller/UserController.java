@@ -68,21 +68,30 @@ public class UserController {
         if (userService.checkExistUserName(user.getUsername())) {
             token.setToken("user duplicating");
             return new ResponseEntity<>(token, HttpStatus.OK);
-        } else {
-            User newUser = new User();
-            newUser.setUsername(user.getUsername());
-            newUser.setFirstname(user.getFirstname());
-            newUser.setEmail(user.getEmail());
-            newUser.setSurname(user.getSurname());
-            newUser.setPassword(user.getPassword());
-            userService.saveUser(user);
-            securityService.autologin(user.getUsername(), user.getPassword());
-
-            TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationService();
-            String a = tokenAuthenticationService.addAuthentication(response, user.getUsername());
-            token.setToken(a);
+        }
+        User newUser = new User();
+        newUser.setUsername(user.getUsername());
+        if ((newUser.getUsername().contains(" ") || newUser.getUsername().equals(""))) {
+            token.setToken("space problem");
             return new ResponseEntity<Object>(token, HttpStatus.OK);
         }
+        newUser.setFirstname(user.getFirstname());
+        newUser.setEmail(user.getEmail());
+        newUser.setSurname(user.getSurname());
+        newUser.setPassword(user.getPassword());
+        if (!(newUser.getEmail().contains("@") && newUser.getEmail().contains("."))) {
+            token.setToken("set proper mail address");
+            return new ResponseEntity<Object>(token, HttpStatus.OK);
+        }
+
+        userService.saveUser(user);
+        securityService.autologin(user.getUsername(), user.getPassword());
+
+        TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationService();
+        String a = tokenAuthenticationService.addAuthentication(response, user.getUsername());
+        token.setToken(a);
+        return new ResponseEntity<Object>(token, HttpStatus.OK);
+
     }
 
     @RequestMapping(value = "/loginuser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -113,23 +122,21 @@ public class UserController {
     @Autowired
     private FacebookConnectionFactory facebookConnectionFactory;
 
-
     @RequestMapping(value = "/connectara", method = RequestMethod.POST)
     public ResponseEntity<?> loginUser(@RequestBody Token token, HttpServletResponse response) {
 
         AccessGrant accessGrant = new AccessGrant(token.getToken());
         Connection<Facebook> connection = facebookConnectionFactory.createConnection(accessGrant);
         Facebook facebook = connection.getApi();
-        String[] fields = {"first_name", "last_name", "email"};
+        String[] fields = {"id", "email", "first_name", "last_name"};
         org.springframework.social.facebook.api.User userProfile = facebook.fetchObject("me", org.springframework.social.facebook.api.User.class, fields);
         User user = new User();
         user.setEmail(userProfile.getEmail());
+        user.setSurname(userProfile.getLastName());
         user.setPassword(userProfile.getId() + "bbb");
         user.setFirstname(userProfile.getFirstName());
-        user.setSurname(userProfile.getLastName());
         user.setFacebookid(userProfile.getId());
         user.setUsername(userProfile.getFirstName() + userProfile.getLastName());
-
 
         if (!userService.checkExistFbId(userProfile.getId())) {
             userService.saveUser(user);
@@ -145,6 +152,5 @@ public class UserController {
 
         return new ResponseEntity<Object>(token, HttpStatus.OK);
     }
-
 
 }

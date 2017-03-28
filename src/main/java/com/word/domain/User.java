@@ -24,7 +24,6 @@ public class User extends BaseEntity {
     @Column(name = "firstname")
     private String firstname;
 
-    @NotNull
     @Column(name = "surname")
     private String surname;
 
@@ -35,7 +34,6 @@ public class User extends BaseEntity {
     @NotNull
     @Column(name = "password")
     private String password;
-
 
     @Column(name = "facebookid")
     private String facebookid;

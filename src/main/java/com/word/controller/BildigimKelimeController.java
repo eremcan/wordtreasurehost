@@ -2,6 +2,7 @@ package com.word.controller;
 
 import com.word.domain.BilinenKelime;
 import com.word.domain.Kelime;
+import com.word.domain.User;
 import com.word.security.jwt.SecurityService;
 import com.word.service.IBildigimKelimeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,15 @@ public class BildigimKelimeController {
     @RequestMapping(value = "/bilinenkelime/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getBildigimKelimSorguById(@PathVariable Long id) {
         return new ResponseEntity<Object>(
+
                 iBildigimKelimeService.findBildigimKelime(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/bilinenkelimerandom/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getBildigimKelimSorguByIdAndGetRandomly(@PathVariable Long id) {
+    @RequestMapping(value = "/bilinenkelimerandom", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getBildigimKelimSorguByIdAndGetRandomly() {
+
+        Long id = securityService.activeUser().getId();
+
         return new ResponseEntity<Object>(
                 iBildigimKelimeService.findBildigimKelimeRandom(id), HttpStatus.OK);
     }
