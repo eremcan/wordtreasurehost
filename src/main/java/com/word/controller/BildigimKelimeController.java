@@ -2,9 +2,9 @@ package com.word.controller;
 
 import com.word.domain.BilinenKelime;
 import com.word.domain.Kelime;
-import com.word.domain.User;
 import com.word.security.jwt.SecurityService;
 import com.word.service.IBildigimKelimeService;
+import com.word.service.impl.UserScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +21,8 @@ public class BildigimKelimeController {
     IBildigimKelimeService iBildigimKelimeService;
     @Autowired
     SecurityService securityService;
+    @Autowired
+    UserScoreService userScoreService;
 
 
     @RequestMapping(value = "/bilinenkelime/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,6 +43,8 @@ public class BildigimKelimeController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/bilinenkelimeekle", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addBilinenKelime(@RequestBody Kelime bilinenKelime) {
+        Long id = securityService.activeUser().getId();
+        userScoreService.kelimeArttir(id);
 
         BilinenKelime mybiBilinenKelime1 = new BilinenKelime();
         mybiBilinenKelime1.setKelime(bilinenKelime);

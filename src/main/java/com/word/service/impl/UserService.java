@@ -76,7 +76,8 @@ public class UserService implements IUserService {
     public void updateUser(User user) {
 
         User mUser = userRepository.findById(user.getId());
-
+        mUser.setFacebookid(user.getFacebookid());
+        mUser.setId(user.getId());
         mUser.setFirstname(user.getFirstname());
         mUser.setSurname(user.getSurname());
         mUser.setUsername(user.getUsername());
