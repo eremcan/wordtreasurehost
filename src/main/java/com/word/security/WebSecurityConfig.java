@@ -33,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/createuser").permitAll()
                 .antMatchers(HttpMethod.POST, "/loginuser").permitAll()
                 .antMatchers(HttpMethod.POST, "/connectara").permitAll()
+                .antMatchers(HttpMethod.GET, "/getscoreboard").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // We filter the api/login requests

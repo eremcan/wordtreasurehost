@@ -17,23 +17,27 @@ public class UserScoreService {
     @Autowired
     UserScoreRepository userScoreRepository;
 
-    public void kelimeArttir(Long activeUserId){
+    public void kelimeArttir(Long activeUserId) {
         UserScore userScore = new UserScore();
         userScore.setUserid(activeUserId);
         List<UserScore> bulunanUser = userScoreRepository.findByExample(userScore);
 
-        if (bulunanUser.isEmpty()){
+        if (bulunanUser.isEmpty()) {
             UserScore userScore1 = new UserScore();
             userScore1.setUserid(activeUserId);
             userScore1.setUserBildigiKelimeToplami(0L);
             userScoreRepository.persist(userScore1);
-        }
-        else{
+        } else {
             userScore = bulunanUser.get(0);
-            if (bulunanUser.get(0).getUserBildigiKelimeToplami()==null)
+            if (bulunanUser.get(0).getUserBildigiKelimeToplami() == null)
                 bulunanUser.get(0).setUserBildigiKelimeToplami(0L);
             bulunanUser.get(0).setUserBildigiKelimeToplami(bulunanUser.get(0).getUserBildigiKelimeToplami() + 1);
             userScoreRepository.merge(userScore);
         }
+    }
+
+    public List<UserScore> getListofUser() {
+
+        return userScoreRepository.userScoreList();
     }
 }
