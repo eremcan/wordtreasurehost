@@ -1,5 +1,6 @@
 package com.word.service.impl;
 
+import com.word.domain.User;
 import com.word.domain.UserScore;
 import com.word.repository.impl.UserScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class UserScoreService {
         }
     }
 
-    public List<UserScore> getListofUser() {
+    public List<User> getListofUser() {
 
         return userScoreRepository.userScoreList();
     }
