@@ -12,7 +12,7 @@ import java.util.Date;
 public class TokenAuthenticationService {
 
     private long EXPIRATIONTIME = 1000 * 60 * 60 * 24 * 10; // 10 days
-    private String secret = "TarikReis";
+    private String secret = "bubirgizlisir";
     private String tokenPrefix = "Bearer";
     private String headerString = "Authorization";
 

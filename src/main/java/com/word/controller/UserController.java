@@ -131,7 +131,11 @@ public class UserController {
         String[] fields = {"id", "email", "first_name", "last_name"};
         org.springframework.social.facebook.api.User userProfile = facebook.fetchObject("me", org.springframework.social.facebook.api.User.class, fields);
         User user = new User();
-        user.setEmail(userProfile.getEmail());
+        if (userProfile.getEmail() == null) {
+            user.setEmail(userProfile.getId() + "@facebook.com");
+        } else {
+            user.setEmail(userProfile.getEmail());
+        }
         user.setSurname(userProfile.getLastName());
         user.setPassword(userProfile.getId() + "bbb");
         user.setFirstname(userProfile.getFirstName());
