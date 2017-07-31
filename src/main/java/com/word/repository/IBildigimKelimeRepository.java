@@ -2,6 +2,7 @@ package com.word.repository;
 
 import com.word.domain.BilinenKelime;
 import com.word.domain.Kelime;
+import com.word.domain.User;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public interface IBildigimKelimeRepository extends ICommonDao<BilinenKelime, Lon
 
     List<Kelime> findByuserAndGetRandomly(long id);
 
+    List findKelimesWithUser(User id);
 }
 
 

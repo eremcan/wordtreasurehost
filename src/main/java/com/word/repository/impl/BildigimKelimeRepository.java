@@ -2,18 +2,23 @@ package com.word.repository.impl;
 
 import com.word.domain.BilinenKelime;
 import com.word.domain.Kelime;
+import com.word.domain.User;
 import com.word.repository.IBildigimKelimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 @Component
 public class BildigimKelimeRepository extends CommonDao<BilinenKelime, Long> implements IBildigimKelimeRepository {
 
-    @Autowired
-    EntityManager entityManager;
+    private final EntityManager entityManager;
+
+    public BildigimKelimeRepository(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Override
     public List<Kelime> findByuserAndGetRandomly(long id) {
@@ -53,5 +58,16 @@ public class BildigimKelimeRepository extends CommonDao<BilinenKelime, Long> imp
                 "\n").getResultList();
 
         return bilmedigimKelimeList;
+    }
+
+    @Override
+    public List findKelimesWithUser(User id) {
+
+
+        Query query = entityManager.createNativeQuery("select k.id,k.kelime_key,k.kelime_value from Kelime as k " +
+                "where k.id in\n" + "(select bl.kelime_id from bilinenkelime as bl where bl.user_id = "+id.getId()+ ") " +
+                "order by k.id asc ", Kelime.class);
+
+        return query.getResultList();
     }
 }

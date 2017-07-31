@@ -2,6 +2,7 @@ package com.word.service;
 
 import com.word.domain.BilinenKelime;
 import com.word.domain.Kelime;
+import com.word.domain.User;
 
 import java.util.List;
 
@@ -19,5 +20,6 @@ public interface IBildigimKelimeService {
     void addKelime(BilinenKelime kelime);
 
 
-    }
+    List<Kelime> findBilinenAllKelimeByUserId(User id);
+}
 

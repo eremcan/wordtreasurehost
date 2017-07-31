@@ -2,6 +2,7 @@ package com.word.controller;
 
 import com.word.domain.BilinenKelime;
 import com.word.domain.Kelime;
+import com.word.domain.User;
 import com.word.security.jwt.SecurityService;
 import com.word.service.IBildigimKelimeService;
 import com.word.service.impl.UserScoreService;
@@ -56,5 +57,12 @@ public class BildigimKelimeController {
     public ResponseEntity<?> getallBilinenKelime() {
         return new ResponseEntity<Object>(
                 iBildigimKelimeService.findBilinenAllKelime(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/bilinenkelimebyuser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getallBilinenKelimeByUserId() {
+        User id = securityService.activeUser();
+        return new ResponseEntity<Object>(
+                iBildigimKelimeService.findBilinenAllKelimeByUserId(id), HttpStatus.OK);
     }
 }
