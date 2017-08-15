@@ -45,8 +45,8 @@ public class BildigimKelimeService implements IBildigimKelimeService {
     }
 
     @Override
-    public List<Kelime> findBilinenAllKelimeByUserId(User id) {
-        List<Kelime> findBilinenKelimesByUserId = bildigimKelimeRepository.findKelimesWithUser(id);
-        return findBilinenKelimesByUserId;
+    public List findBilinenAllKelimeByUserId(User id) {
+        return bildigimKelimeRepository.findBilinenAllKelimesByUserId(id);
+
     }
 }

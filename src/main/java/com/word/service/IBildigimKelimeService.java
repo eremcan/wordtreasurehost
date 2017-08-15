@@ -19,7 +19,7 @@ public interface IBildigimKelimeService {
 
     void addKelime(BilinenKelime kelime);
 
-
-    List<Kelime> findBilinenAllKelimeByUserId(User id);
+//kelime modeli.
+    List findBilinenAllKelimeByUserId(User id);
 }
 

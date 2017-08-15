@@ -15,7 +15,7 @@ public interface IBildigimKelimeRepository extends ICommonDao<BilinenKelime, Lon
 
     List<Kelime> findByuserAndGetRandomly(long id);
 
-    List findKelimesWithUser(User id);
+    List findBilinenAllKelimesByUserId(User id);
 }
 
 

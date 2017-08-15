@@ -4,7 +4,6 @@ import com.word.domain.BilinenKelime;
 import com.word.domain.Kelime;
 import com.word.domain.User;
 import com.word.repository.IBildigimKelimeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -30,7 +29,7 @@ public class BildigimKelimeRepository extends CommonDao<BilinenKelime, Long> imp
 
         List<Kelime> gelenUcYanlisSecenek = entityManager.createQuery("SELECT k " +
                 "FROM Kelime as k \n" +
-                "ORDER BY rand()" +
+                " ORDER BY rand()" +
                 "\n").setMaxResults(4).getResultList();
         boolean isAyniobje = false;
         for (Kelime item : gelenUcYanlisSecenek) {
@@ -61,11 +60,10 @@ public class BildigimKelimeRepository extends CommonDao<BilinenKelime, Long> imp
     }
 
     @Override
-    public List findKelimesWithUser(User id) {
-
-
-        Query query = entityManager.createNativeQuery("select k.id,k.kelime_key,k.kelime_value from Kelime as k " +
-                "where k.id in\n" + "(select bl.kelime_id from bilinenkelime as bl where bl.user_id = "+id.getId()+ ") " +
+    public List findBilinenAllKelimesByUserId(User id) {
+        Query query;
+        query = entityManager.createNativeQuery("select k.id,k.kelime_key,k.kelime_value from Kelime as k " +
+                "where k.id in\n" + "(select bl.kelime_id from bilinenkelime as bl where bl.user_id = " + id.getId() + ") " +
                 "order by k.id asc ", Kelime.class);
 
         return query.getResultList();
