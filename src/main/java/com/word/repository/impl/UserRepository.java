@@ -2,8 +2,12 @@ package com.word.repository.impl;
 
 import com.word.domain.User;
 import com.word.repository.IUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -11,6 +15,14 @@ import java.util.List;
  */
 @Component
 public class UserRepository extends CommonDao<User, Long> implements IUserRepository {
+
+    private final
+    EntityManager entityManager;
+
+    @Autowired
+    public UserRepository(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Override
     public boolean checkExistFbId(String id) {
@@ -25,15 +37,10 @@ public class UserRepository extends CommonDao<User, Long> implements IUserReposi
 
 
     @Override
-    public User findByUserName(String username) {
-        User user = new User();
-        user.setUsername(username);
-        List<User> userList = findByExample(user);
-        if (userList.size() == 0)
-            return null;
-        else {
-            return userList.get(0);
-        }
+    public List<User> findByUserName(String username) {
+
+        Query ahmet= entityManager.createQuery("select u From User as u where u.username = ?1",User.class).setParameter(1,username);
+        return (List<User>)ahmet.getResultList();
     }
 
     @Override

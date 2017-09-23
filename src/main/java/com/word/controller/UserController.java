@@ -15,9 +15,10 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.web.bind.annotation.*;
+import java.text.Normalizer;
 
 import javax.servlet.http.HttpServletResponse;
-
+json
 /**
  * Created by Nahide on 09.02.2017.
  */
@@ -50,7 +51,7 @@ public class UserController {
             return new ResponseEntity<>("Kullanıcı Bulunamadıcatch", HttpStatus.BAD_REQUEST);
         }
     }
-
+//katmanlı mimarı. istek karşılanmalı(ne olduğunu anlama, yetkilendirme) controller katmanına iletir. buradan servis katmanına iletilir.
     @RequestMapping(value = "/getalluser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllUser() {
         return new ResponseEntity<Object>(
@@ -140,12 +141,12 @@ public class UserController {
         user.setPassword(userProfile.getId() + "bbb");
         user.setFirstname(userProfile.getFirstName());
         user.setFacebookid(userProfile.getId());
-        user.setUsername(userProfile.getFirstName() + userProfile.getLastName());
+        user.setUsername(Normalizer.normalize(userProfile.getFirstName() + userProfile.getLastName(), Normalizer.Form.NFKD).replaceAll("\\p{M}|\\s", "").toLowerCase());
 
         if (!userService.checkExistFbId(userProfile.getId())) {
             userService.saveUser(user);
         }
-        securityService.autologin(user.getUsername(), user.getPassword());
+        securityService.autologin("cagatayErem", user.getPassword());
         TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationService();
         String a = tokenAuthenticationService.addAuthentication(response, user.getUsername());
 
@@ -156,5 +157,13 @@ public class UserController {
 
         return new ResponseEntity<Object>(token, HttpStatus.OK);
     }
+    @RequestMapping(value = "/denemeconnect", method = RequestMethod.GET)
+    public ResponseEntity<?> loginUserDeneme() {
+        User user = new User();
+        String userNameDeneme = "10155115778844137";
+        boolean a = userService.checkExistFbId(userNameDeneme);
+        return new ResponseEntity<>(user,HttpStatus.OK);
 
+
+}
 }

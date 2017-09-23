@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface IBildigimKelimeRepository extends ICommonDao<BilinenKelime, Long> {
 
-    List<Kelime> findByuser(long id);
+    List findByuser(long id);
 
     List<Kelime> findByuserAndGetRandomly(long id);
 

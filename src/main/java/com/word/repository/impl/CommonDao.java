@@ -1,14 +1,20 @@
 package com.word.repository.impl;
 
+import com.word.domain.User;
 import com.word.repository.ICommonDao;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.*;
+import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Required;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -56,15 +62,24 @@ public class CommonDao<T, ID extends Serializable> implements ICommonDao<T, ID> 
 		return findByCriteria();
 	}
 
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findByExample(final T exampleInstance) {
 		Session session = (Session) getEntityManager().getDelegate();
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		javax.persistence.criteria.CriteriaQuery<T> cq = cb.createQuery(getEntityClass());
+		Root<T> rt = cq.from(getEntityClass());
+		ParameterExpression<T> pe = cb.parameter(getEntityClass());
+		cq.select(rt).where(cb.equal(pe.));
+		return query.getResultList();
+
+		/*
 		Criteria crit = session.createCriteria(getEntityClass());
 		Example example = Example.create(exampleInstance);
 		crit.add(example);
 		crit.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-		return crit.list();
+		return crit.list();*/
 	}
 
 	@Override
